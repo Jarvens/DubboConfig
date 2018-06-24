@@ -124,6 +124,34 @@
 - XML 次之，如果在XML中有配置，则dubbo.properties中的相应配置无效
 - properties最后，相当于默认值，只有XML没有配置时，properties的相应配置才会生效，通常用于共享配置
 ----
-###### API配置
+###### API配置 硬编码方式进行配置，生产环境不推荐使用所以不做详解
+
+###### 注解配置
+> 我们还可以通过注解的方式对dubbo进行配置。该方式是dubbo在2.5.7版本之后新增的。可以节省XML配置和属性配置，本人比较倾向于注解配置
+
+```java
+@Configuration
+public class DubboConfiguration{
+
+   @Bean
+   public ApplicationConfig applciationConfig(){
+     ApplciationConfig config = new ApplciationConfig();
+     config.setName("dubbo");
+     return config;
+   }
+
+   @Bean
+   public RegistryConfig registryConfig(){
+     RegistryConfig config = new RegistryConfig();
+     config.setAddress("zookeeper://127.0.0.1:2181");
+     //由于dubbo支持多种注册中心 会在后面讲解
+     config.setClient("curator");
+     return config;
+   }
+
+   //......更多配置请查看com.alibaba.dubbo.config包
+
+}
+```
 
 
